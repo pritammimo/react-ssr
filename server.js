@@ -11,21 +11,26 @@ const DEV_ENV = 'development'
 const bootstrap = async () => {
   const app = createApp()
   let vite
+  vite = await createViteServer({
+    server: { middlewareMode: true },
+    appType: 'custom'
+  })
 
-  if (process.env.NODE_ENV === DEV_ENV) {
-    vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'custom'
-    })
+  app.use(fromNodeMiddleware(vite.middlewares))
+  // if (process.env.NODE_ENV === DEV_ENV) {
+  //   vite = await createViteServer({
+  //     server: { middlewareMode: true },
+  //     appType: 'custom'
+  //   })
 
-    app.use(fromNodeMiddleware(vite.middlewares))
-  } else {
-    app.use(
-      fromNodeMiddleware(sirv('dist/client', {
-        gzip: true
-      }))
-    )
-  }
+  //   app.use(fromNodeMiddleware(vite.middlewares))
+  // } else {
+  //   app.use(
+  //     fromNodeMiddleware(sirv('dist/client', {
+  //       gzip: true
+  //     }))
+  //   )
+  // }
 
   app.use(
     '*',

@@ -5,10 +5,10 @@ import { Other } from './pages/Other'
 import { NotFound } from './pages/NotFound'
 import { ClientCompopnent } from './pages/Client'
 
-export const Router2 = () => {
+export const Router2 = ({data}) => {
   return (
     <Routes>
-      <Route index element={<Home />} />
+      <Route index element={<Home value={data}/>} />
       <Route path="/other" element={<Other />} />
        <Route path="/client" element={<ClientCompopnent/>}/>
         <Route path="*" element={<NotFound />} />
